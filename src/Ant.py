@@ -17,14 +17,13 @@
 #
 # Ant class
 
-from GLWidget import *
-from PyQt4.QtCore import *
-
-from algo.astar import *
+from algo.astar import AStar
+from const.constants import MANHATTAN, SOURCE, TARGET, NORMAL, BLOCKED
+import Globals
 import collections
-from random import *
 import math
 
+#TODO: Replace A* with bug
 class Ant():
     '''
     Class for generating ants
@@ -292,7 +291,7 @@ class Ant():
         self.parent.spawnOneFood(antLocationTile)
         self.switchSprite(Globals.datadir + 'images/ants/yellowant.png')
         self.hasFood = False
-        self.queue.popleft() 
+        self.queue.popleft()
     
     def doubleClick(self):
 
@@ -348,9 +347,7 @@ class Ant():
             self.queue.popleft()
             return
         
-        map = self.getMap(start, end)
-        
-        a = AStar(map, MANHATTAN)
+        a = AStar(self.genMap(start, end), MANHATTAN)
         q = collections.deque()
         
         a.step(q)
@@ -375,37 +372,8 @@ class Ant():
 
         self.queue.popleft()
         self.queue.append(self.moveAlongPath)
-    
-    def findAltPath(self, avoid):
-        start = [self.pos[0] / 32, self.pos[1] / 32]
-        end = [self.newPos[0] / 32, self.newPos[1] / 32]
-        # Start and end are the same tile, dont need to move.
-        if start == end:
-            self.queue.popleft()
-            return
-
-        if self.underground:
-            start[1] -= Globals.mapheight
-            end[1] -= Globals.mapheight
         
-        map = self.getMap(start, end, avoid)
-        
-        a = AStar(map, MANHATTAN)
-        q = collections.deque()
-        
-        a.step(q)
-        
-        self.path.clear()
-        for elem in a.path:
-            self.path.append(elem)
-        
-        if not len(self.path):
-            self.queue.popleft()
-            return
-        
-        self.path.popleft()
-        
-    def getMap(self, start, end, avoid = None):
+    def genMap(self, start, end, avoid = None):
         """Generate a string representation of the map."""
         output = ""
 

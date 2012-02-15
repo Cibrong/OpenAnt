@@ -20,10 +20,9 @@
 #
 # WorkerAnt class
 
-from GLWidget import *
-from PyQt4.QtCore import *
-from Ant import *
+from Ant import Ant
 
+#TODO: Move A* movement logic here. Only the yellow and should use A* pathfinding.
 class YellowAnt(Ant):
     def __init__(self, xpos, ypos, tiles, sprite):
         Ant.__init__(self, xpos, ypos, tiles, sprite)

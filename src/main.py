@@ -80,6 +80,8 @@ class OpenAnt(QApplication):
         
         # Draw map, set view to ground.
         self.map = Map()
+        
+        # TODO: Glabals.view is defined here instead of in GLobals.
         Globals.view = self.map.generateMap()
         self.map.spawnAnts()
         
@@ -103,7 +105,6 @@ class OpenAnt(QApplication):
             self.updateDisplay(interpolation)
 
     def updateDisplay(self, interpolation):
-       
         #lerp away
         if not 'nolerp' in sys.argv:
             if self.map.yellowAnt.moving:

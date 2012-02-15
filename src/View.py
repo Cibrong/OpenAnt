@@ -24,6 +24,7 @@
 import Globals
 import numpy
 
+#TODO: Better define the view and map classes. View should handle the camera movement and boundries.
 class View():
     def __init__(self, mapSlice, hidden = False):
         self.tiles = numpy.empty_like(mapSlice)
@@ -37,7 +38,7 @@ class View():
                 self.tiles[x][y] = Globals.glwidget.createImage(mapSlice[x,y].image, 0, [1, 1, -1, -1], [x*Globals.pixelsize, y*Globals.pixelsize, -1, -1], hidden)
     
     def delete(self):
-	# Delete all images
+        # Delete all images
         pass # not implemented yet.
 
     def ground(self, x=0, y=0):

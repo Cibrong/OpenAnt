@@ -45,6 +45,7 @@ class Tile():
     def isPassable(self):
         return self.passable
 
+#TODO: Better define the view and map classes. Mao should handle creating the map, getting spawn locations. Maybe food and ant locations?
 class Map():
     '''
     Class for generating maps
@@ -164,7 +165,7 @@ class Map():
 
         self.pos_food[(x, y)] = Food(x, y, Globals.glwidget.createImage(Globals.datadir + 'images/food/food.png', 2, [32, 32, 32, 32], [x * 32, y * 32, 32, 32]))
         self.occupiedTiles[(x, y)] = True
-		
+        
     def removeOneFood(self, foodLocation):
         ###remove image, take out of map's food stack, take off of occupiedTiles
         foodParticle = self.pos_food[foodLocation]
@@ -176,7 +177,7 @@ class Map():
         x, y = tunnelLocation
         self.tiles[x][y] = Tile(Globals.datadir + 'images/underground/underground2.png', True)
         Globals.view.updateTile(self.tiles[x][y], x, y)
- 
+        
     def update(self):
         if len(self.yellowAnt.queue):
             self.yellowAnt.queue[0]()
